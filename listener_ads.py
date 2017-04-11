@@ -12,8 +12,6 @@ from rospy_tutorials.msg import Floats
 import numpy
 
 def callback(data):
-  #  rospy.loginfo(rospy.get_caller_id() +
-  #                 " Movement direction: %s", data.data)
   rospy.loginfo(rospy.get_caller_id() + 
 		" Detected values: %s", data.data)
 
@@ -29,14 +27,13 @@ def callback(data):
         atexit.register(turnOffMotors)
 
     #setup 2 motors
-  m1 = mh.getMotor(1)
-  m2 = mh.getMotor(2)
+  m1 = mh.getMotor(1) #left motor
+  m2 = mh.getMotor(2) #right motor
 
     #setup motors' speed
 #  speed = 150
   speed = 150
-  motorBalance=14
-#  motorBalance = 16 #sperimental value to balance motors' spin
+  motorBalance = 15 #sperimental value to balance motors' spin
   m1.setSpeed(speed + motorBalance) #left motor
   m2.setSpeed(speed) #right motor
 
@@ -47,39 +44,39 @@ def callback(data):
         m1.run(Adafruit_MotorHAT.FORWARD)
 	m2.run(Adafruit_MotorHAT.FORWARD)
     
-    #turn right curva leggera
+  # curva leggera a destra
   elif(values[2]<1200):
        m1.run(Adafruit_MotorHAT.FORWARD)
        m2.run(Adafruit_MotorHAT.FORWARD)
-       m1.setSpeed(speed+20)
+       m2.setSpeed(speed-30)
 
-  # turn right curva secca
+  # curva a destra
   elif (values[1]<1200):
       m1.run(Adafruit_MotorHAT.FORWARD)
       m2.run(Adafruit_MotorHAT.FORWARD)
       m2.setSpeed(speed-110)	
     
-  #turn right curva a spigolo
-  elif (values[0]<1500):
+  # curva ad angolo a destra
+  elif (values[0]<1400):
         m1.run(Adafruit_MotorHAT.FORWARD)
         m2.run(Adafruit_MotorHAT.FORWARD)
         m2.setSpeed(speed-140)
 
 
-   #turn left leggera
+   # curva leggera a sinistra
   elif(values[5]<1200):
         m1.run(Adafruit_MotorHAT.FORWARD)
         m2.run(Adafruit_MotorHAT.FORWARD)
-       	m2.setSpeed(speed+20)
+       	m1.setSpeed(speed-30)
 
-   #turn left secca
+   # curva a sinistra
   elif(values[6]<1200):
  	m1.run(Adafruit_MotorHAT.FORWARD)
         m2.run(Adafruit_MotorHAT.FORWARD)
         m1.setSpeed(speed-110)
 
-  #turn left curva a spigolo
-  elif(values[7]<1500):
+  # curva ad angolo a sinistra
+  elif(values[7]<1400):
         m1.run(Adafruit_MotorHAT.FORWARD)
         m2.run(Adafruit_MotorHAT.FORWARD)
         m1.setSpeed(speed-140)
